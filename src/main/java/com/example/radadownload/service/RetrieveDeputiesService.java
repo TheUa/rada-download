@@ -21,9 +21,8 @@ public class RetrieveDeputiesService implements DeputiesService {
 
         int min = 12008;
         int max = 12948;
-        Document document = null;
+        Document document;
         int i;
-        List<Map<String, Object>> maps = new ArrayList<>();
 
         for (
                 int indexURL = max;
