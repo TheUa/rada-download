@@ -26,6 +26,7 @@ public class RetrieveDeputiesService implements DeputiesService {
                 indexURL <= max; indexURL += 20
         ) {
             try {
+
                 document = Jsoup.connect("http://w1.c1.rada.gov.ua/pls/radan_gs09/ns_reg_write?g_id=" + max).userAgent("Chrome/4.0.249.0 Safari/532.5").referrer("http://www.google.com").get();
                 for (i = 1; i <= 490; i++) {
                     Elements elementsPresent = document.select("li#0idd" + i + " > div.golos");
