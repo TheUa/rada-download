@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class RetrieveDeputiesService implements DeputiesService {
 
 
+
     public static List<DeputyPresence> retrievePresenceFromRadaWebsite() {
         List<DeputiesService> retrievePresenceFromRadaWebsite = new ArrayList<>();
         int min = 12008;
