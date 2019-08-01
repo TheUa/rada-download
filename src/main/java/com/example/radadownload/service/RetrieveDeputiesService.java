@@ -45,6 +45,7 @@ public class RetrieveDeputiesService implements DeputiesService {
                                     .build());
 
 
+
                 }
             } catch (IOException connectException) {
                 connectException.printStackTrace();
