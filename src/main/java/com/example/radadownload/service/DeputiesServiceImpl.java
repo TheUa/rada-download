@@ -13,17 +13,21 @@ public class DeputiesServiceImpl implements DeputiesService {
 
     private DeputiesRepositoryImpl deputiesRepository;
 
-    private RetrieveDeputiesServiceImpl retrieveDeputiesServiceImpl;
+    private RetrieveDeputiesService retrieveDeputiesService;
 
     DeputiesServiceImpl(DeputiesRepositoryImpl deputiesRepository,
-                        RetrieveDeputiesServiceImpl retrieveDeputiesServiceImpl) {
+                        RetrieveDeputiesService retrieveDeputiesService) {
         this.deputiesRepository = deputiesRepository;
-        this.retrieveDeputiesServiceImpl = retrieveDeputiesServiceImpl;
+        this.retrieveDeputiesService = retrieveDeputiesService;
     }
 
     @Override
     public List<DeputyPresence> getDeputiesPresence() {
-        String f = "Проблема с получением таблицы";
+
+        deputiesRepository.batchInsertDeputiesPresences(retrieveDeputiesService.retrieveDeputiesPresent());
+
+
+        String f = "Таблица!";
         log.error("getDeputiesPresence. Request: {}", f);
         return deputiesRepository.getAllDeputies();
     }

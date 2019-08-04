@@ -5,23 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.radadownload.model.DeputyPresence;
+import com.example.radadownload.repository.DeputiesRepositoryImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class RetrieveDeputiesServiceImpl implements RetrieveDeputiesService {
 
     @Override
-    public List<DeputyPresence> setDeputiesPresence() {
+    public List<DeputyPresence> retrieveDeputiesPresent() {
 
-        List<DeputyPresence> retrievePresenceFromRadaWebsiteList = new ArrayList<>();
+        List<DeputyPresence> listDeputiesPresence = new ArrayList<>();
 
         int min = 12008;
         int max = 12948;
         Document document;
-        int i;
+        int i = 3;
 
         for (
                 int indexURL = max;
@@ -30,25 +33,31 @@ public class RetrieveDeputiesServiceImpl implements RetrieveDeputiesService {
             try {
 
                 document = Jsoup.connect("http://w1.c1.rada.gov.ua/pls/radan_gs09/ns_reg_write?g_id=" + max).userAgent("Chrome/4.0.249.0 Safari/532.5").referrer("http://www.google.com").get();
-                for (i = 1; i <= 490; i++) {
-                    Elements elementName = document.select("li#0idd" + i + " > div.dep");
-                    Elements elementsPresent = document.select("li#0idd" + i + " > div.golos");
+
+                log.error("setDeputiesPresence. Request: {}", document.title());
+
+//                for (i = 1; i <= 490; i++) {
+                Elements elementName = document.select("li#0idd" + i + " > div.dep");
+                Elements elementsPresent = document.select("li#0idd" + i + " > div.golos");
+                log.error("setDeputiesPresence. Request: {}", elementName.text());
 //                    if (!elementsPresent.text().equals("") && elementsPresent.text().equals("Зареєстрований")) {
 //                        listDPpresent.set(i - 1, value + 1);
 //                    }
-                    retrievePresenceFromRadaWebsiteList.add(
-                            DeputyPresence.builder()
-                                    .name(elementName.text())
-                                    .deputyId(i)
-                                    .presenceCount(i + 100)
-                                    .build());
+                listDeputiesPresence.add(
+                        DeputyPresence.builder()
+                                .deputyId(i)
+                                .name(elementName.text())
+                                .presenceCount(i + 100)
+                                .build());
+                log.error("setDeputiesPresence. Request: {}", listDeputiesPresence);
 
-                }
+
+//                }
             } catch (IOException connectException) {
                 connectException.printStackTrace();
             }
         }
-        return retrievePresenceFromRadaWebsiteList;
+        return listDeputiesPresence;
     }
 }
 

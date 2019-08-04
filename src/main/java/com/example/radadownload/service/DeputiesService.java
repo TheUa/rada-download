@@ -8,5 +8,4 @@ public interface DeputiesService {
 
     List<DeputyPresence> getDeputiesPresence();
 
-//    Integer retrieveDeputiesPresenceAndSave();
 }

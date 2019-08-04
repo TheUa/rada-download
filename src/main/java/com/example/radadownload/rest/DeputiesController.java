@@ -2,8 +2,8 @@ package com.example.radadownload.rest;
 
 import com.example.radadownload.model.DeputyPresence;
 import com.example.radadownload.service.DeputiesService;
+import com.example.radadownload.service.RetrieveDeputiesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +18,11 @@ public class DeputiesController {
 
     @Autowired
     DeputiesController(DeputiesService deputiesService) {
-     this.deputiesService = deputiesService;
+        this.deputiesService = deputiesService;
     }
 
     @GetMapping("/")
     public List<DeputyPresence> getDeputiesPresence() {
         return deputiesService.getDeputiesPresence();
     }
-
 }
