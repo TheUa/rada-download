@@ -5,7 +5,6 @@ import com.example.radadownload.repository.DeputiesRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,12 +13,12 @@ public class DeputiesServiceImpl implements DeputiesService {
 
     private DeputiesRepositoryImpl deputiesRepository;
 
-    private RetrieveDeputiesService retrieveDeputiesService;
+    private RetrieveDeputiesServiceImpl retrieveDeputiesServiceImpl;
 
     DeputiesServiceImpl(DeputiesRepositoryImpl deputiesRepository,
-                        RetrieveDeputiesService retrieveDeputiesService) {
+                        RetrieveDeputiesServiceImpl retrieveDeputiesServiceImpl) {
         this.deputiesRepository = deputiesRepository;
-        this.retrieveDeputiesService = retrieveDeputiesService;
+        this.retrieveDeputiesServiceImpl = retrieveDeputiesServiceImpl;
     }
 
     @Override
@@ -27,12 +26,5 @@ public class DeputiesServiceImpl implements DeputiesService {
         String f = "Проблема с получением таблицы";
         log.error("getDeputiesPresence. Request: {}", f);
         return deputiesRepository.getAllDeputies();
-    }
-
-    @Override
-    public Integer retrieveDeputiesPresenceAndSave() {
-        List<DeputyPresence> deputiesPresenceList = new ArrayList<>();
-        RetrieveDeputiesService.retrievePresenceFromRadaWebsite();
-        return deputiesRepository.batchInsertDeputiesPresences(deputiesPresenceList);
     }
 }

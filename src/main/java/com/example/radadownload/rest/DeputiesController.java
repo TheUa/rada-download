@@ -17,7 +17,7 @@ public class DeputiesController {
     private DeputiesService deputiesService;
 
     @Autowired
-    DeputiesController(@Qualifier("deputiesServiceImpl") DeputiesService deputiesService) {
+    DeputiesController(DeputiesService deputiesService) {
      this.deputiesService = deputiesService;
     }
 
