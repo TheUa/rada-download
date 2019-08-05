@@ -26,7 +26,6 @@ public class DeputiesServiceImpl implements DeputiesService {
 
         deputiesRepository.batchInsertDeputiesPresences(retrieveDeputiesService.retrieveDeputiesPresent());
 
-
         String f = "Таблица!";
         log.error("getDeputiesPresence. Request: {}", f);
         return deputiesRepository.getAllDeputies();

@@ -2,10 +2,10 @@ package com.example.radadownload.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.radadownload.model.DeputyPresence;
-import com.example.radadownload.repository.DeputiesRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,10 +24,12 @@ public class RetrieveDeputiesServiceImpl implements RetrieveDeputiesService {
         int min = 12008;
         int max = 12948;
         Document document;
-        int i = 3;
+        int i;
+        HashMap<Integer, String> elementNameMap = new HashMap<>();
+        HashMap<Integer, Integer> elementPresentMap = new HashMap<>();
 
         for (
-                int indexURL = max;
+                int indexURL = min;
                 indexURL <= max; indexURL += 20
         ) {
             try {
@@ -36,26 +38,32 @@ public class RetrieveDeputiesServiceImpl implements RetrieveDeputiesService {
 
                 log.error("setDeputiesPresence. Request: {}", document.title());
 
-//                for (i = 1; i <= 490; i++) {
-                Elements elementName = document.select("li#0idd" + i + " > div.dep");
-                Elements elementsPresent = document.select("li#0idd" + i + " > div.golos");
-                log.error("setDeputiesPresence. Request: {}", elementName.text());
-//                    if (!elementsPresent.text().equals("") && elementsPresent.text().equals("Зареєстрований")) {
-//                        listDPpresent.set(i - 1, value + 1);
-//                    }
-                listDeputiesPresence.add(
-                        DeputyPresence.builder()
-                                .deputyId(i)
-                                .name(elementName.text())
-                                .presenceCount(i + 100)
-                                .build());
-                log.error("setDeputiesPresence. Request: {}", listDeputiesPresence);
+                for (i = 1; i <= 490; i++) {
+                    Elements elementName = document.select("li#0idd" + i + " > div.dep");
+                    Elements elementsPresent = document.select("li#0idd" + i + " > div.golos");
+                    if (!elementName.text().equals("")) {
+                        elementNameMap.put(i, elementName.text());
+                        Integer value = elementPresentMap.get(i);
+                        if (value != null) {
+                            if ((elementsPresent.text().equals("Зареєстрований")||elementsPresent.text().equals("Зареєстрована")))
+                                elementPresentMap.put(i, value + 1);
+                        } else elementPresentMap.put(i, 0);
+                    }
+                }
 
 
-//                }
             } catch (IOException connectException) {
                 connectException.printStackTrace();
             }
+        }
+        for (i = 1; i <= 490; i++) {
+            if (elementNameMap.containsKey(i) && elementPresentMap.containsKey(i))
+                listDeputiesPresence.add(
+                        DeputyPresence.builder()
+                                .deputyId(i)
+                                .name(elementNameMap.get(i))
+                                .presenceCount(elementPresentMap.get(i))
+                                .build());
         }
         return listDeputiesPresence;
     }
