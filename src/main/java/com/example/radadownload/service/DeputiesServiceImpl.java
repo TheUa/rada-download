@@ -30,4 +30,10 @@ public class DeputiesServiceImpl implements DeputiesService {
         log.error("getDeputiesPresence. Request: {}", f);
         return deputiesRepository.getAllDeputies();
     }
+
+    @Override
+    public List<DeputyPresence> getDeputiesPresenceForWeb() {
+        return deputiesRepository.getAllDeputies();
+    }
+
 }

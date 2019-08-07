@@ -8,4 +8,5 @@ public interface DeputiesService {
 
     List<DeputyPresence> getDeputiesPresence();
 
+    List<DeputyPresence> getDeputiesPresenceForWeb();
 }

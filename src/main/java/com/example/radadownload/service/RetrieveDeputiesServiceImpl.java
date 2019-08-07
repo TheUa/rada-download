@@ -50,8 +50,6 @@ public class RetrieveDeputiesServiceImpl implements RetrieveDeputiesService {
                         } else elementPresentMap.put(i, 0);
                     }
                 }
-
-
             } catch (IOException connectException) {
                 connectException.printStackTrace();
             }

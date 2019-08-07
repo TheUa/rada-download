@@ -25,4 +25,9 @@ public class DeputiesController {
     public List<DeputyPresence> getDeputiesPresence() {
         return deputiesService.getDeputiesPresence();
     }
+
+    @GetMapping("/android")
+    public List<DeputyPresence> getDeputiesPresenceForWeb() {
+        return deputiesService.getDeputiesPresenceForWeb();
+    }
 }
