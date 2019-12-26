@@ -13,5 +13,5 @@ public class DeputyPresence {
 
     String name;
 
-    Integer presenceCount;
+    String party;
 }

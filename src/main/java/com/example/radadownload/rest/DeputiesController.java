@@ -1,8 +1,8 @@
 package com.example.radadownload.rest;
 
+import com.example.radadownload.model.DeputyCard;
 import com.example.radadownload.model.DeputyPresence;
 import com.example.radadownload.service.DeputiesService;
-import com.example.radadownload.service.RetrieveDeputiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,5 +29,15 @@ public class DeputiesController {
     @GetMapping("/android")
     public List<DeputyPresence> getDeputiesPresenceForWeb() {
         return deputiesService.getDeputiesPresenceForWeb();
+    }
+
+    @GetMapping("/downloadFullCard")
+    public List<DeputyCard>  getDeputiesCard() {
+        return deputiesService.getDeputiesCard();
+    }
+
+    @GetMapping("/card")
+    public List<DeputyCard> getDeputiesAllCard () {
+        return deputiesService.getDeputiesAllCard();
     }
 }
